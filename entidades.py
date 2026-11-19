@@ -4,7 +4,7 @@
 
 from abc import ABC, abstractmethod
 
-# Importamos las excepciones necesarias para esta parte definidas en Excepciones.py
+# Importamos las excepciones necesarias para esta parte definidas en excepciones.py
 
 from excepciones import DatosInvalidosError
 
