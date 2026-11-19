@@ -11,11 +11,11 @@ class Servicio(ABC):
 
     # Constructor de la clase Servicio
     def __init__(self, codigo, nombre, precio):
-        # Validamos que los datos no esten vacios y que el precio sea un numero positivo
-        if not codigo or not nombre:
-            raise DatosInvalidosError("El codigo y el nombre son obligatorios.")
+        # Validamos que el codigo y el nombre sean cadenas de texto y que no esten vacios
         if not isinstance(codigo, str) or not isinstance(nombre, str):
             raise DatosInvalidosError("El codigo y el nombre deben ser cadenas de texto.")
+        if not codigo.strip() or not nombre.strip():
+            raise DatosInvalidosError("El codigo y el nombre son obligatorios.")
         # Validamos que el precio sea un numero positivo
         if isinstance(precio, bool) or not isinstance(precio, (int, float)):
             raise DatosInvalidosError("El precio debe ser un numero.")
@@ -26,6 +26,11 @@ class Servicio(ABC):
         self._nombre = nombre.strip()
         self._precio = precio
 
+    # Proiedad para consultar nombre del servicio
+    @property   
+    def nombre(self):
+        return self._nombre
+    
     # Método abstracto para calcular el costo del servicio
     @abstractmethod
     def calcular_costo(self, cantidad=1, descuento=0):
@@ -33,6 +38,7 @@ class Servicio(ABC):
 
     # Metodo de mostrar descripción del servicio
 
+    @abstractmethod
     def mostrar_descripcion(self):
         pass
 
@@ -45,8 +51,8 @@ class ServicioHabitacion(Servicio):
         # Inicializamos los datos de la clase padre
         super().__init__(codigo, nombre, precio)
         # Validamos que la capacidad sea un numero positivo
-        if isinstance(capacidad, bool) or not isinstance(capacidad, (int, float)):
-            raise DatosInvalidosError("La capacidad debe ser un numero.")
+        if isinstance(capacidad, bool) or not isinstance(capacidad, int):
+            raise DatosInvalidosError("La capacidad debe ser un numero entero.")
         if capacidad <= 0:
             raise DatosInvalidosError("La capacidad debe ser un numero positivo.")
         # Guardamos la capacidad como atributo
@@ -55,6 +61,11 @@ class ServicioHabitacion(Servicio):
     # Metodo para calcular el costo del servicio de habitaciones por noches
     def calcular_costo(self, cantidad=1, descuento=0):
         try:
+            # Validamos que capacidad y descuento sean numeros
+            if isinstance(cantidad, bool) or not isinstance(cantidad, (int, float)):
+                raise CalculoInvalidoError("La cantidad debe ser un numero.")
+            if isinstance(descuento, bool) or not isinstance(descuento, (int, float)):
+                raise CalculoInvalidoError("El descuento debe ser un numero.")
             # Validamos que la cantidad de noches sea un numero positivo
             if cantidad <= 0:
                 raise CalculoInvalidoError("La cantidad de nochesdebe ser un numero positivo.")
@@ -79,8 +90,11 @@ class ServicioEquipo(Servicio):
     def __init__(self, codigo, nombre, precio, tipo_equipo):
         # Inicializamos los datos de la clase padre
         super().__init__(codigo, nombre, precio)
+        # Validamos que el tipo de equipo sea una cadena de texto
+        if not isinstance(tipo_equipo, str):
+            raise DatosInvalidosError("El tipo de equipo debe ser texto.")  
         # Validamos que el tipo de equipo no este vacio
-        if not tipo_equipo:
+        if not tipo_equipo.strip():
             raise DatosInvalidosError("El tipo de equipo es obligatorio.")
         # Guardamos el tipo de equipo como atributo
         self._tipo_equipo = tipo_equipo.strip()
@@ -88,6 +102,11 @@ class ServicioEquipo(Servicio):
     # Metodo para calcular el costo del servicio de alquiler de equipos por dias
     def calcular_costo(self, cantidad=1, descuento=0):
         try:
+            # Validamos que cantidad y descuento sean numeros
+            if isinstance(cantidad, bool) or not isinstance(cantidad, (int, float)):
+                raise CalculoInvalidoError("La cantidad debe ser un numero.")
+            if isinstance(descuento, bool) or not isinstance(descuento, (int, float)):
+                raise CalculoInvalidoError("El descuento debe ser un numero.")
             # Validamos que la cantidad de dias sea un numero positivo
             if cantidad <= 0:
                 raise CalculoInvalidoError("La cantidad de dias debe ser un numero positivo.")
@@ -110,8 +129,11 @@ class ServicioConsulta(Servicio):
     def __init__(self, codigo, nombre, precio, especialidad):
         # Inicializamos los datos de la clase padre
         super().__init__(codigo, nombre, precio)
+        # Validamos que la especialidad sea una cadena de texto
+        if not isinstance(especialidad, str):
+            raise DatosInvalidosError("La especialidad debe ser texto.")
         # Validamos que la especialidad no este vacia
-        if not especialidad:
+        if not especialidad.strip():
             raise DatosInvalidosError("La especialidad es obligatoria.")
         # Guardamos la especialidad como atributo
         self._especialidad = especialidad.strip()
@@ -119,6 +141,11 @@ class ServicioConsulta(Servicio):
     # Metodo para calcular el costo del servicio de consulta por horas
     def calcular_costo(self, cantidad=1, descuento=0):
         try:
+            # Validamos que cantidad y descuento sean numeros
+            if isinstance(cantidad, bool) or not isinstance(cantidad, (int, float)):
+                raise CalculoInvalidoError("La cantidad debe ser un numero.")
+            if isinstance(descuento, bool) or not isinstance(descuento, (int,float)):
+                raise CalculoInvalidoError("El descuento debe ser un numero.")  
             # Validamos que la cantidad de horas sea un numero positivo
             if cantidad <= 0:
                 raise CalculoInvalidoError("La cantidad de horas debe ser un numero positivo.")

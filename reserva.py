@@ -7,9 +7,15 @@ from excepciones import DatosInvalidosError, ReservaInvalidaError, OperacionNoPe
 class Reserva:
     # Constructor de la clase Reserva
     def __init__(self, codigo, cliente, servicio, cantidad):
+        # Validamos que el codigo sea una cadena de texto
+        if not isinstance(codigo, str):
+            raise DatosInvalidosError("El codigo debe ser texto.")
+        # Validamos que los datos sean obligatorios
+        if not codigo.strip():
+            raise DatosInvalidosError("El codigo es obligatorio.")
         # Validamos que los datos no esten vacios y que la cantidad sea un numero positivo
-        if not codigo or not cliente or not servicio:
-            raise DatosInvalidosError("El codigo, cliente y servicio son obligatorios.")
+        if cliente is None or servicio is None:
+            raise DatosInvalidosError("El cliente y el servicio son obligatorios.")
         if isinstance(cantidad, bool) or not isinstance(cantidad, (int, float)):
             raise ReservaInvalidaError("La cantidad debe ser un numero.")
         if cantidad <= 0:
@@ -33,8 +39,8 @@ class Reserva:
     # Metodo cancelacion de la reserva
     def cancelar_reserva(self):
         # Verificamos que la reserva no este ya cancelada antes de cancelarla
-        if self._estado == "cancelada":
-            raise OperacionNoPermitidaError("La reserva ya esta cancelada.")
+        if self._estado in ("cancelada", "procesada"):
+            raise OperacionNoPermitidaError("La reserva ya esta cancelada o procesada.")
         # Cambiamos el estado de la reserva a cancelada
         self._estado = "cancelada"
 
@@ -50,8 +56,6 @@ class Reserva:
         # Devolvemos el costo total de la reserva procesada
         return total      
         
-
-    
     # Metodo calcular el costo total de la reserva
     def calcular_total(self, descuento=0):
         #verificamos que la reserva no este cancelada antes de calcular el costo total
