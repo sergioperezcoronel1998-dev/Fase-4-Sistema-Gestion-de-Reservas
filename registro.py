@@ -28,7 +28,7 @@ class Registro:
 
     # Metodo para agregar un cliente al sistema
     def agregar_cliente(self, cliente):
-        # Verificamos que el cliente no este registraddo previamente antes de agregarlo
+        # Verificamos que el cliente no este registrado previamente antes de agregarlo
         for existente in self.clientes:
             if existente.identificacion == cliente.identificacion:
                 raise DatosInvalidosError("El cliente ya esta registrado en el sistema.")

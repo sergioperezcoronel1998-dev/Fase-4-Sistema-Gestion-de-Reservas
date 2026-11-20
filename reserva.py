@@ -51,7 +51,7 @@ class Reserva:
             raise OperacionNoPermitidaError("La reserva no puede ser procesada, debe estar en estado confirmada.")
         # Calculamos costo de la reserva
         total = self.calcular_total()
-        # Actualizamos el estado de la reserva a procesada y registramos el evento
+        # Actualizamos el estado de la reserva a procesada 
         self._estado = "procesada"
         # Devolvemos el costo total de la reserva procesada
         return total      

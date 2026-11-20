@@ -61,14 +61,14 @@ class ServicioHabitacion(Servicio):
     # Metodo para calcular el costo del servicio de habitaciones por noches
     def calcular_costo(self, cantidad=1, descuento=0):
         try:
-            # Validamos que capacidad y descuento sean numeros
+            # Validamos que cantidad y descuento sean numeros
             if isinstance(cantidad, bool) or not isinstance(cantidad, (int, float)):
                 raise CalculoInvalidoError("La cantidad debe ser un numero.")
             if isinstance(descuento, bool) or not isinstance(descuento, (int, float)):
                 raise CalculoInvalidoError("El descuento debe ser un numero.")
             # Validamos que la cantidad de noches sea un numero positivo
             if cantidad <= 0:
-                raise CalculoInvalidoError("La cantidad de nochesdebe ser un numero positivo.")
+                raise CalculoInvalidoError("La cantidad de noches debe ser un numero positivo.")
             # Validamos que el descuento sea un numero entre 0 y 100
             if descuento < 0 or descuento > 100:
                 raise CalculoInvalidoError("El descuento debe ser un numero entre 0 y 100.")
@@ -144,7 +144,7 @@ class ServicioConsulta(Servicio):
             # Validamos que cantidad y descuento sean numeros
             if isinstance(cantidad, bool) or not isinstance(cantidad, (int, float)):
                 raise CalculoInvalidoError("La cantidad debe ser un numero.")
-            if isinstance(descuento, bool) or not isinstance(descuento, (int,float)):
+            if isinstance(descuento, bool) or not isinstance(descuento, (int, float)):
                 raise CalculoInvalidoError("El descuento debe ser un numero.")  
             # Validamos que la cantidad de horas sea un numero positivo
             if cantidad <= 0:

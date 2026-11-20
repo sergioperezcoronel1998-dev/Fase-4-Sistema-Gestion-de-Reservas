@@ -40,10 +40,10 @@ class Cliente(Entidad):
         if "@" not in correo or "." not in correo:
             raise DatosInvalidosError("Correo invalido, formato no aceptado.")
         # Guardamos el correo como atributo
-        self._correo = correo.strip()
+        self.__correo = correo.strip()
     # Metodo para mostrar la información del cliente
     def mostrar_informacion(self):
-        return(f"identificacion: {self._identificacion}, nombre: {self._nombre}, correo: {self._correo}")
+        return(f"identificacion: {self._identificacion}, nombre: {self._nombre}, correo: {self.__correo}")
 
 # Propiedad para consultar información del cliente
     # Propiedad para consultar la identificacion del cliente
